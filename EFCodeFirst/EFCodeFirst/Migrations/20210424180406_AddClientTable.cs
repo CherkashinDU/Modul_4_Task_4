@@ -7,10 +7,6 @@ namespace EFCodeFirst.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employee_Office_OfficeId",
-                table: "Employee");
-
             migrationBuilder.AddColumn<int>(
                 name: "ClientId",
                 table: "Project",
@@ -40,14 +36,6 @@ namespace EFCodeFirst.Migrations
                 column: "ClientId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Employee_Office_OfficeId",
-                table: "Employee",
-                column: "OfficeId",
-                principalTable: "Office",
-                principalColumn: "OfficeId",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Project_Client_ClientId",
                 table: "Project",
                 column: "ClientId",
@@ -69,19 +57,15 @@ namespace EFCodeFirst.Migrations
                 "INSERT INTO " +
                 "Project (Name, Budget, StartedDate, ClientId) " +
                 "VALUES " +
-                "('WebShop', 978783, '2019-11-23', 1), " +
-                "('Provider', 68524, '2015-01-10', 2), " +
-                "('EmailWorker', '356987', '2015-01-10', 3), " +
-                "('BottleDesigner ', '345869', '2015-01-10', 4), " +
-                "('Player', 56489, '2020-05-13', 5)");
+                "('WebShop', 978783, '2019-11-23', (SELECT ClientId FROM Client WHERE Name = 'Microsoft')), " +
+                "('Provider', 68524, '2015-01-10', (SELECT ClientId FROM Client WHERE Name = 'UkrEnergo')), " +
+                "('EmailWorker', '356987', '2015-01-10', (SELECT ClientId FROM Client WHERE Name = 'Xiaomi')), " +
+                "('BottleDesigner ', '345869', '2015-01-10', (SELECT ClientId FROM Client WHERE Name = 'Tuborg')), " +
+                "('Player', 56489, '2020-05-13', (SELECT ClientId FROM Client WHERE Name = 'Alpine'))");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employee_Office_OfficeId",
-                table: "Employee");
-
             migrationBuilder.DropForeignKey(
                 name: "FK_Project_Client_ClientId",
                 table: "Project");
@@ -97,13 +81,10 @@ namespace EFCodeFirst.Migrations
                 name: "ClientId",
                 table: "Project");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employee_Office_OfficeId",
-                table: "Employee",
-                column: "OfficeId",
-                principalTable: "Office",
-                principalColumn: "OfficeId",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.Sql(
+               "DELETE FROM Project");
+
+            migrationBuilder.Sql("DBCC CHECKIDENT(Project, RESEED, 0)");
         }
     }
 }

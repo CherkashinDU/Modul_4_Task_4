@@ -70,13 +70,13 @@ namespace EFCodeFirst.Migrations
                         column: x => x.OfficeId,
                         principalTable: "Office",
                         principalColumn: "OfficeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Employee_Title_TitleId",
                         column: x => x.TitleId,
                         principalTable: "Title",
                         principalColumn: "TitleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,13 +98,13 @@ namespace EFCodeFirst.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employee",
                         principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EmployeeProject_Project_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Project",
                         principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

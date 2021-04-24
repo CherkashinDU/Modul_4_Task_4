@@ -19,6 +19,11 @@ namespace EFCodeFirst.EntityConfigurations
                 .WithMany(ep => ep.Employees)
                 .HasForeignKey(d => d.OfficeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(t => t.Title)
+                .WithMany(ep => ep.Employees)
+                .HasForeignKey(d => d.TitleId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

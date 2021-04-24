@@ -213,7 +213,7 @@ namespace EFCodeFirst.Migrations
                     b.HasOne("EFCodeFirst.Entities.Title", "Title")
                         .WithMany("Employees")
                         .HasForeignKey("TitleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Office");
@@ -226,13 +226,13 @@ namespace EFCodeFirst.Migrations
                     b.HasOne("EFCodeFirst.Entities.Employee", "Employee")
                         .WithMany("EmployeeProjects")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EFCodeFirst.Entities.Project", "Project")
                         .WithMany("EmployeeProjects")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");

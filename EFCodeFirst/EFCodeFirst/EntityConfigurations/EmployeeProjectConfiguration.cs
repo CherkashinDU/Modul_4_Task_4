@@ -16,12 +16,12 @@ namespace EFCodeFirst.EntityConfigurations
             builder.HasOne(e => e.Employee)
                 .WithMany(ep => ep.EmployeeProjects)
                 .HasForeignKey(d => d.EmployeeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(p => p.Project)
                 .WithMany(ep => ep.EmployeeProjects)
                 .HasForeignKey(p => p.ProjectId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCodeFirst.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210423090926_AddClientTable")]
-    partial class AddClientTable
+    [Migration("20210424173410_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,39 +20,6 @@ namespace EFCodeFirst.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("EFCodeFirst.Entities.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ClientId")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("date")
-                        .HasColumnName("EndedDate");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Location");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Name");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date")
-                        .HasColumnName("StartedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Client");
-                });
 
             modelBuilder.Entity("EFCodeFirst.Entities.Employee", b =>
                 {
@@ -165,9 +132,6 @@ namespace EFCodeFirst.Migrations
                         .HasColumnType("money")
                         .HasColumnName("Budget");
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -179,8 +143,6 @@ namespace EFCodeFirst.Migrations
                         .HasColumnName("StartedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Project");
                 });
@@ -215,7 +177,7 @@ namespace EFCodeFirst.Migrations
                     b.HasOne("EFCodeFirst.Entities.Title", "Title")
                         .WithMany("Employees")
                         .HasForeignKey("TitleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Office");
@@ -228,34 +190,18 @@ namespace EFCodeFirst.Migrations
                     b.HasOne("EFCodeFirst.Entities.Employee", "Employee")
                         .WithMany("EmployeeProjects")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EFCodeFirst.Entities.Project", "Project")
                         .WithMany("EmployeeProjects")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("EFCodeFirst.Entities.Project", b =>
-                {
-                    b.HasOne("EFCodeFirst.Entities.Client", "Client")
-                        .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("EFCodeFirst.Entities.Client", b =>
-                {
-                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("EFCodeFirst.Entities.Employee", b =>
