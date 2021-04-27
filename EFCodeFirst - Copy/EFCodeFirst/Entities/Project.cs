@@ -11,7 +11,7 @@ namespace EFCodeFirst.Entities
         public DateTime StartedDate { get; set; }
 
         public int ClientId { get; set; }
-        public virtual Client Client { get; set; }
-        public virtual List<EmployeeProject> EmployeeProjects { get; set; } = new List<EmployeeProject>();
+        public Client Client { get; set; }
+        public List<EmployeeProject> EmployeeProjects { get; set; } = new List<EmployeeProject>();
     }
 }
